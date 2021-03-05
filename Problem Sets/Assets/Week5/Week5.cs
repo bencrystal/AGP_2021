@@ -14,6 +14,22 @@ using Random = UnityEngine.Random;
 public class Week5 : MonoBehaviour
 {
     /*
+     *Hi Jack!  I'm not sure exactly what is required to
+     * convert each player's classType into a class-- right now they're strings (which I know is not the most efficient
+     * way to think about solving this but in retrospect I'm not sure if I have as much cs background as I thought I
+     * did when signing up for this class)!  Thank you for being patient as always :)
+     *
+     *
+     * I spent way too long on the first question as per usual.  I feel like if I truly limited myself to
+     * 30 minutes each I wouldn't be learning on my own, but I couldn't get the first one to work so far and I'm going
+     * to move onto the second problem now!
+     *
+     * As for the regular assignment, I'm debating whether I want to use the given Roguelike or if I want to do
+     * something super simple with my virtual DAW game, but I'll have to make that decision soon!
+     *
+     *
+     *
+     * 
      * Write a CSV parser - that takes in a CSV file of players and returns a list of those players as class objects.
      * To help you out, I've defined the player class below.  An example save file is in the folder "CSV Examples".
      *
@@ -22,6 +38,7 @@ public class Week5 : MonoBehaviour
      *     - location is tricky - because the location has a comma in it!!
      */
 
+    /*
     private class Player
     {
         public enum Class : byte
@@ -41,21 +58,144 @@ public class Week5 : MonoBehaviour
         public bool alive;
         public Vector2 location;
     }
+    */
 
+    private class Player
+    {
+        public enum Class : byte
+        {
+            Undefined = 0,
+            Monk,
+            Wizard,
+            Druid,
+            Thief,
+            Sorcerer
+        }
+        
+        public Class classType;
+        public string name;
+        public uint maxHealth;
+        public int[] stats;
+        public bool alive;
+        public Vector2 location;
+        
+        public Player(Class classType, string name, uint maxHealth, int[] stats, bool alive, Vector2 location)
+        {
+            
+        }
+        
+
+    }
+    
+    private string newName = null;
+    private string newClass = null;
+    private int newMaxHealth = 0;
+
+    private int[] newStats = new int[5];
+    //int newWisdom = 0;
+    //int newIntelligence = 0;
+    //int newStrength = 0;
+    //int newDefense = 0;
+    //int newAcrimony = 0;
+    private bool newAlive = false;
+    private int[] newLocation = new int[1];
     private List<Player> CSVParser(TextAsset toParse)
     {
+        //declare variables to be reassigned
 
+        
+        
+        
         
         //create string array of each character's details
         string[] players = toParse.text.Split ('\n');
         
-        //creates empty matrix to be populated with players and stats
-        int rows = players.Length - 1; //-1 because of column headings
+        
+        //defines dimensions of csv
+        int rows = players.Length; //-1?
         int columns = 11;
-        string[,] statMatrix = new string[rows, columns];
+        //string[,] statMatrix = new string[rows, columns];
+        
 
+        //create a player list that will hold all players
+        List<Player> allPlayers = new List<Player>();
         
         
+        
+        for (int i = 1; i < rows; i++)  //start at 1 because of column headings row
+        {
+            //separates each character's stats into string array
+            string[] stats = players[i].Split(',');
+
+            
+            
+            for (int j = 0; j < columns; j++)
+            {
+                switch (j) 
+                {
+                    case 0:
+                        newName  = stats[j];
+                        break;
+
+                    case 1:
+                        newClass = stats[j];
+                        break;
+
+                    case 2:
+                        newMaxHealth = Int32.Parse(stats[j]);
+                        break;
+                        
+                    case 3:
+                        newStats[0] = Int32.Parse(stats[j]);
+                        break;
+                        
+                    case 4:
+                        newStats[1] = Int32.Parse(stats[j]);
+                        break;
+                    
+                    case 5:
+                        newStats[2] = Int32.Parse(stats[j]);
+                        break;
+                        
+                    case 6:
+                        newStats[3] = Int32.Parse(stats[j]);
+                        break;
+                        
+                    case 7:
+                        newStats[4] = Int32.Parse(stats[j]);
+                        break;
+                        
+                    case 8:
+                        newAlive = Convert.ToBoolean(stats[j]);
+                        break;
+                        
+                    case 9:
+                        newLocation[0] = Int32.Parse(stats[j]);;
+                        break;
+                        
+                    case 10:
+                        newLocation[1] = Int32.Parse(stats[j]);
+                        //Player.name = Player.name + ", " + stats[j]; //concatenates both location coordinates
+                        break;
+                        
+                    //default:
+                        //Console.WriteLine("Done");
+                        //break;
+                }
+            }//exits for loop
+            
+            
+            //add new player to list each loop
+            allPlayers.Add(new Player(newClass, newName, newMaxHealth, newStats, newAlive, newLocation)); 
+            
+            //not sure when to use {} in a new class instantiation?
+            //(newClass, newName, newMaxHealth, newStats, newAlive, newLocation));
+
+        }
+        
+        
+        //2D ARRAY ATTEMPT
+        /*
         //fills in slots
         for (int i = 1; i < rows; i++)
         {
@@ -78,14 +218,14 @@ public class Week5 : MonoBehaviour
 
             }
         }
-        
-            //Debug.Log(statMatrix[0,0]);
+        */
+            
 
-       
-        
-        
-        
-        var toReturn = new List<Player>();
+            //Player Yes = new Player();
+
+
+
+            var toReturn = allPlayers;
 
         return toReturn;
     }
@@ -116,6 +256,13 @@ public class Week5 : MonoBehaviour
     {
         return "";
     }
+    
+    
+    
+    
+    
+    
+    
     
     // =========================== DON'T EDIT BELOW THIS LINE =========================== //
 
