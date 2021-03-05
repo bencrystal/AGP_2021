@@ -44,10 +44,55 @@ public class Week5 : MonoBehaviour
 
     private List<Player> CSVParser(TextAsset toParse)
     {
+
+        
+        //create string array of each character's details
+        string[] players = toParse.text.Split ('\n');
+        
+        //creates empty matrix to be populated with players and stats
+        int rows = players.Length - 1; //-1 because of column headings
+        int columns = 11;
+        string[,] statMatrix = new string[rows, columns];
+
+        
+        
+        //fills in slots
+        for (int i = 1; i < rows; i++)
+        {
+            //separates each character's stats into string array
+            string[] stats = players[i].Split(',');
+            
+            for (int j = 0; j < columns; j++)
+            {
+            
+                //check to see if string is second "location dimension" and if so concatenate
+                if (j == 10)
+                {
+                    statMatrix[i, 9] = statMatrix[i, 9] + ", " + stats[j];
+                }
+
+                else
+                {
+                    statMatrix[i, j] = stats[j];
+                }
+
+            }
+        }
+        
+            //Debug.Log(statMatrix[0,0]);
+
+       
+        
+        
+        
         var toReturn = new List<Player>();
 
         return toReturn;
     }
+    
+    
+    
+    
 
     /*
      * Provided is a high score list as a JSON file.  Create the functions that will find the highest scoring name, and
@@ -83,7 +128,7 @@ public class Week5 : MonoBehaviour
         csvTest.text = "CSV Parser\n<align=left>\n";
 
         var parsedPlayers1 = CSVParser(csvExample);
-
+        
         if (parsedPlayers1.Count == 0)
         {
             csvTest.text += "Need to return some players.";
