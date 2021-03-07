@@ -120,7 +120,7 @@ public class Week5 : MonoBehaviour
         //create a player list that will hold all players
         List<Player> allPlayers = new List<Player>();
         
-        
+        /*
         
         for (int i = 1; i < rows; i++)  //start at 1 because of column headings row
         {
@@ -177,22 +177,20 @@ public class Week5 : MonoBehaviour
                         newLocation[1] = Int32.Parse(stats[j]);
                         //Player.name = Player.name + ", " + stats[j]; //concatenates both location coordinates
                         break;
-                        
-                    //default:
-                        //Console.WriteLine("Done");
-                        //break;
+                    
                 }
             }//exits for loop
             
             
-            //add new player to list each loop
-            allPlayers.Add(new Player(newClass, newName, newMaxHealth, newStats, newAlive, newLocation)); 
+            
+            //THIS LINE ADDS NEW PLAYERS TO LIST EACH LOOP
+            //allPlayers.Add(new Player(newClass, newName, newMaxHealth, newStats, newAlive, newLocation)); 
             
             //not sure when to use {} in a new class instantiation?
-            //(newClass, newName, newMaxHealth, newStats, newAlive, newLocation));
+           
 
         }
-        
+        */
         
         //2D ARRAY ATTEMPT
         /*
@@ -245,9 +243,52 @@ public class Week5 : MonoBehaviour
      * JSON objects.
      */
 
+    
+    /*
+     * I commented out the top problem to work on the bottom, but I'm still struggling with getting the format read in.
+     *
+     * As for the pseudo code, I was originally trying to get the file into a Dictionary like you've listed but I
+     * couldn't figure that out so I basically was trying to do this:
+     *
+     * jsonFile -> strings for each "player" on high score list
+     * score -> 2 characters after the second colon (:) to 2 characters from the end of that string
+     * string to int conversion
+     * 
+     * for the NumberAboveScore, just compare that int to the argument "score" and increment "toReturn" if higher
+     *
+     * for GetHighScoreName, create a variable holding the score of the first player read in and another holding their
+     * name, and then compare each line's score to that first variable -- if higher, replace both high score and name
+     * return name
+     */
+    
+    
     public int NumberAboveScore(TextAsset jsonFile, int score)
     {
-        var toReturn = 0;
+        var toReturn = 0; //increase for each above this threshold
+
+        //Debug.Log(jsonFile);
+        
+        //Debug.Log(jsonFile.text[10]);
+        
+        string[] lines = jsonFile.text.Split(
+            new[] { Environment.NewLine },
+            StringSplitOptions.None
+        );
+
+        //Debug.Log(lines);
+        int i = 0;
+        foreach (var c in lines)
+        {
+            Debug.Log(lines[i]);
+            string thisLine = lines[i].ToString();
+            int scoreLocation = thisLine.LastIndexOf(":") + 2; //first character of score number
+            
+            Debug.Log(scoreLocation);
+            Debug.Log(thisLine.Length - scoreLocation);
+            Debug.Log(thisLine.Substring[scoreLocation, thisLine.Length - scoreLocation]);
+            i++;
+        }
+        //JSON.Parse(jsonFile)["someKey"];
      
         return toReturn;
     }
@@ -301,6 +342,8 @@ public class Week5 : MonoBehaviour
                 Success(parsedPlayers1.First(p => p.name == "Fortune").location == new Vector2(12.322f, 42f)) +
                 " Correctly read in location.\n";
         }
+        
+        //______________________________________________________________
         
         networkTest.text = "JSON Data\n<align=left>\n";
         networkTest.text += Success(NumberAboveScore(jsonExample, 10) == 6) + " number above score worked correctly.\n";
