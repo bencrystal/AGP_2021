@@ -18,14 +18,14 @@ public class Week7 : MonoBehaviour
      * Do not solve these problems with loops.
      */
 
-    
+
     public string output = "";
     public string leftover = "";
-    
+
     // Return the reversed version of the input.
     public string ReverseString(string toReverse)
     {
-        
+
         /*
         general solution layout:
         concatenate last letter to output string
@@ -42,28 +42,28 @@ public class Week7 : MonoBehaviour
             leftover = toReverse.Substring(0, toReverse.Length);
             output = output + ReverseString(toReverse.Substring(0, toReverse.Length)); // + ReverseString(leftover);  
         }*/
-        
+
         if (toReverse.Length > 1)
         {
-            leftover = toReverse.Substring(0, toReverse.Length - 2);
+            leftover = toReverse.Substring(0, toReverse.Length - 1); // t e s t
             return
                 (toReverse.Substring(toReverse.Length - 1) +
                  ReverseString(leftover)); //.Substring(0, toReverse.Length-1))); // + ReverseString(leftover);  
         }
-        
+
         else
         {
             return toReverse;
         }
-        
-        
+
+
         return "";
     }
 
     private string first = "";
     private string last = "";
     private string middle = "";
-    
+
     // Return whether or not the string is a palindrome
     public bool IsPalindrome(string toCheck)
     {
@@ -78,29 +78,56 @@ public class Week7 : MonoBehaviour
 
         if (toCheck.Length > 1)
         {
-            
-            
-            first = toCheck.Substring(0);
-            last = toCheck.Substring(toCheck.Length - 1);
+            if (firstLastChecker(toCheck) == true)
+            {
+                return true;
+            }
 
-            Debug.Log(first + last);
+            else
+            {
+                return false;
+            }
             
+        }
+
+        else
+        {
+            return true;
+        }
+
+    }
+
+
+
+public bool firstLastChecker(string toCheck)
+    {
+        first = toCheck.Substring(0);
+        last = toCheck.Substring(toCheck.Length);
+
+        Debug.Log(first + last);
+        if (toCheck.Length > 1)
+        {
             if (first != last)
             {
                 return false;
             }
 
-            middle = toCheck.Substring(1, toCheck.Length - 2);
+            else
+            {
+                middle = toCheck.Substring(1, toCheck.Length - 1); //r a c e c a r     --> a c e c a 
             
-            IsPalindrome(middle);
-
+                IsPalindrome(middle);
+            }  
         }
-        
+
+        else
+        {
+            return true;
+        }
+
         return true;
+
     }
-    
-    
-    
     
 
     // Return all strings that can be made from the set characters using all characters.
@@ -165,7 +192,7 @@ public class Week7 : MonoBehaviour
             sum += numbers[k];
             //k++;
         }*/
-
+/*
         while (numbers.Length > 0)
         {
             sum += numbers[0];
@@ -180,7 +207,9 @@ public class Week7 : MonoBehaviour
 
         Debug.Log("sum = " + sum);
         return sum;
-        //return 0;
+        //return 0;*/
+
+        return 0;
     }
     
     /*
@@ -204,7 +233,7 @@ public class Week7 : MonoBehaviour
     {
         
         //Debug.Log(ReverseString("TEST"));
-        //Debug.Log(IsPalindrome("racecar"));
+        Debug.Log(IsPalindrome("racecar"));
         recursionTest.text =  "Recursion Problems\n<align=left>\n";
         recursionTest.text += Success(ReverseString("TEST") == "TSET") + " string reverser worked correctly.\n";
         recursionTest.text += Success(!IsPalindrome("TEST") && IsPalindrome("ASDFDSA") && IsPalindrome("ASDFFDSA")) + " palindrome test worked correctly.\n";
