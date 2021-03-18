@@ -58,7 +58,7 @@ public class Week5 : MonoBehaviour
         public bool alive;
         public Vector2 location;
     }
-    */
+    *//*
 
     private class Player
     {
@@ -217,6 +217,7 @@ public class Week5 : MonoBehaviour
             }
         }
         */
+        /*
             
 
             //Player Yes = new Player();
@@ -261,6 +262,8 @@ public class Week5 : MonoBehaviour
      * return name
      */
     
+    
+    /*
     
     public int NumberAboveScore(TextAsset jsonFile, int score)
     {
@@ -353,5 +356,5 @@ public class Week5 : MonoBehaviour
     private string Success(bool test)
     {
         return test ? "<color=\"green\">PASS</color>" : "<color=\"red\">FAIL</color>";
-    }
+    }*/
 }
