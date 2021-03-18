@@ -60,7 +60,9 @@ public class Week7 : MonoBehaviour
         return "";
     }
 
-
+    private string first = "";
+    private string last = "";
+    private string middle = "";
     
     // Return whether or not the string is a palindrome
     public bool IsPalindrome(string toCheck)
@@ -72,19 +74,54 @@ public class Week7 : MonoBehaviour
          * return true if 0 or 1 letter is left in the substring and still true
          */
 
-        string first = "";
-        string last = "";
-        string middle = "";
+
+
+        if (toCheck.Length > 1)
+        {
+            
+            
+            first = toCheck.Substring(0);
+            last = toCheck.Substring(toCheck.Length - 1);
+
+            Debug.Log(first + last);
+            
+            if (first != last)
+            {
+                return false;
+            }
+
+            middle = toCheck.Substring(1, toCheck.Length - 2);
+            
+            IsPalindrome(middle);
+
+        }
         
-        
-        
-        return false;
+        return true;
     }
+    
+    
+    
+    
 
     // Return all strings that can be made from the set characters using all characters.
+    
+    /*
+     *this time i will start with an external method
+     * 
+     * abc
+     * abc acb bac bca cab cba
+     *
+     * assign each letter a number in a character array
+     * for string.length-1 iterate what the next character could be 
+     */
     public string[] AllStringsFromCharacters(params char[] characters)
     {
         return new string[0];
+    }
+
+    private static nextLetter()
+    {
+        
     }
     
     // Return the sum of all the numbers given.
@@ -114,7 +151,8 @@ public class Week7 : MonoBehaviour
     private void Update()
     {
         
-        Debug.Log(ReverseString("TEST"));
+        //Debug.Log(ReverseString("TEST"));
+        Debug.Log(IsPalindrome("racecar"));
         recursionTest.text =  "Recursion Problems\n<align=left>\n";
         recursionTest.text += Success(ReverseString("TEST") == "TSET") + " string reverser worked correctly.\n";
         recursionTest.text += Success(!IsPalindrome("TEST") && IsPalindrome("ASDFDSA") && IsPalindrome("ASDFFDSA")) + " palindrome test worked correctly.\n";
