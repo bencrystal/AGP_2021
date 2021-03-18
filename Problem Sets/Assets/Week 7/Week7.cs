@@ -118,17 +118,69 @@ public class Week7 : MonoBehaviour
     {
         return new string[0];
     }
-
-    private static nextLetter()
+/*
+    private static nextLetter(char[] theChars)
     {
         
-    }
+        
+        for (int i = 0; i <= theChars.Length - 1; i++) 
+        { 
+            theChars = swap(str, l, i); 
+            
+            nextLetter(str, l + 1, r); 
+            
+            theChars = swap(str, l, i); 
+        } 
+    }*/
     
     // Return the sum of all the numbers given.
+    
+    /*
+     *iterate through the length of the numbers array and add them?
+     * I don't understand what needs to be recursive about this one
+     *
+     * if I were to do it recursively:
+     * define sum as 0 outside method
+     * sum += numbers[0]
+     * redefine numbers as the rest of the int array without the first element
+     * invoke sumofallnumbers again
+     */
 
+    private int sum = 0;
     public int SumOfAllNumbers(params int[] numbers)
     {
-        return 0;
+        
+        /*
+        foreach (int element in numbers)
+        {
+            sum += numbers[element];
+        }*/
+        
+        
+        /*
+        for (int k = 1; k < numbers.Length; k++)
+        {
+            Debug.Log("length = " + numbers.Length);
+            Debug.Log("k = " + k + " and " + numbers[k]);
+            sum += numbers[k];
+            //k++;
+        }*/
+
+        while (numbers.Length > 0)
+        {
+            sum += numbers[0];
+            int[] newNumbers = new int[numbers.Length];
+            for (int l = 1; l < numbers.Length - 1; l++)
+            {
+                newNumbers[l - 1] = numbers[l];//newNumbenumbers.CopyTo(newNumbers);       //[1, numbers.Length - 1];
+            }
+            Debug.Log(newNumbers);
+            SumOfAllNumbers(newNumbers);
+        }
+
+        Debug.Log("sum = " + sum);
+        return sum;
+        //return 0;
     }
     
     /*
@@ -152,7 +204,7 @@ public class Week7 : MonoBehaviour
     {
         
         //Debug.Log(ReverseString("TEST"));
-        Debug.Log(IsPalindrome("racecar"));
+        //Debug.Log(IsPalindrome("racecar"));
         recursionTest.text =  "Recursion Problems\n<align=left>\n";
         recursionTest.text += Success(ReverseString("TEST") == "TSET") + " string reverser worked correctly.\n";
         recursionTest.text += Success(!IsPalindrome("TEST") && IsPalindrome("ASDFDSA") && IsPalindrome("ASDFFDSA")) + " palindrome test worked correctly.\n";
