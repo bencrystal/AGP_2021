@@ -75,48 +75,56 @@ public class Week7 : MonoBehaviour
          */
 
 
-
+        Debug.Log(FirstLastChecker(toCheck));
         if (toCheck.Length > 1)
         {
-            if (firstLastChecker(toCheck) == true)
+            if (!FirstLastChecker(toCheck))
             {
-                return true;
-            }
-
-            else
-            {
+                //if firstLastChecker is false return false
                 return false;
             }
             
         }
 
-        else
-        {
-            return true;
-        }
+        //if <= 1 character or FirstLastChecker returns true
+        
+        
+        return true;
+        
 
     }
 
 
 
-public bool firstLastChecker(string toCheck)
+public bool FirstLastChecker(string toCheck)
     {
-        first = toCheck.Substring(0);
-        last = toCheck.Substring(toCheck.Length);
+        
 
-        //Debug.Log(first + last);
+        
+        
+        //true if 1 or 0 characters
         if (toCheck.Length > 1)
         {
+            first = toCheck.Substring(0,1);
+            last = toCheck.Substring(toCheck.Length-1,1);
+            
+            Debug.Log(first + " first " + last + " last ");
+            Debug.Log(first == last);
+            
+            //false if first and last are not equal
             if (first != last)
             {
+                //Debug.Log(first + last + "%%%%");
                 return false;
             }
-
+    
+            //if >1 character and first = last
             else
             {
-                middle = toCheck.Substring(1, toCheck.Length - 1); //r a c e c a r     --> a c e c a 
-            
-                IsPalindrome(middle);
+                middle = toCheck.Substring(1, toCheck.Length - 2); //r a c e c a r     --> a c e c a 
+                Debug.Log(middle);
+                //IsPalindrome(middle);
+                FirstLastChecker(middle);
             }  
         }
 
@@ -262,12 +270,12 @@ public bool firstLastChecker(string toCheck)
 
             cans += loopCans;
             
-            Debug.Log(cans + " is cans");
-            Debug.Log(loopCans + " is loopcans");
+            //Debug.Log(cans + " is cans");
+            //Debug.Log(loopCans + " is loopcans");
 
             money = (money % price) + (loopCans * canRefund); //finds leftover money after refunds
             //money = (money % price) + ((money / price) * canRefund); //finds leftover money after refunds
-            Debug.Log(money + " is money");
+            //Debug.Log(money + " is money");
             //cans += CansCanIBuy(money, price, canRefund);
 
             if (money >= price)
@@ -277,7 +285,7 @@ public bool firstLastChecker(string toCheck)
             
         }
 
-        Debug.Log(cans);
+        //Debug.Log(cans);
         return cans;
     }
     
@@ -289,11 +297,13 @@ public bool firstLastChecker(string toCheck)
 
     public TextMeshProUGUI recursionTest, sodaTest;
     
-    private void Update()
+    private void Start()//Update()
     {
         
         //Debug.Log(ReverseString("TEST"));
-        //Debug.Log(IsPalindrome("racecar"));
+        Debug.Log(IsPalindrome("test"));
+        //Debug.Log(IsPalindrome("asdfdsa"));
+        //Debug.Log(IsPalindrome("asdffdsa"));
         recursionTest.text =  "Recursion Problems\n<align=left>\n";
         recursionTest.text += Success(ReverseString("TEST") == "TSET") + " string reverser worked correctly.\n";
         recursionTest.text += Success(!IsPalindrome("TEST") && IsPalindrome("ASDFDSA") && IsPalindrome("ASDFFDSA")) + " palindrome test worked correctly.\n";
