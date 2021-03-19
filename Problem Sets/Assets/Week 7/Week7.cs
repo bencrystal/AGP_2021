@@ -104,7 +104,7 @@ public bool firstLastChecker(string toCheck)
         first = toCheck.Substring(0);
         last = toCheck.Substring(toCheck.Length);
 
-        Debug.Log(first + last);
+        //Debug.Log(first + last);
         if (toCheck.Length > 1)
         {
             if (first != last)
@@ -219,11 +219,71 @@ public bool firstLastChecker(string toCheck)
      * or how much to pay out for cans.  Write a function that can determine how many cans someone can purchase for
      * a given amount of money, assuming they always return all the cans and then buy as much soda as they can.
      */
+    
+    
+    
+    /*
+     * Rough function outline:
+     *
+     * define method cansCanBuy that takes in same 3 arguments and outputs int
+     * cans += money/ price
+     *
+     * leftoverMoney = (money / price) * refund + money % price
+     *
+     * cansCanBuy (leftoverMoney, price, refund, cans)
+     *  iterate and output total cans
+     * 
+     * 
+     */
 
+
+    public int cans; //public so I can see it in Unity
+    
     public int TotalCansPurchasable(float money, float price, float canRefund)
     {
-        return 0;
+        cans = 0;
+
+        //cans += CansCanIBuy(money, price, canRefund, cans);
+        
+        //cans = CansCanIBuy(money, price, canRefund);
+        CansCanIBuy(money, price, canRefund);
+        //Debug.Log(cans);
+        return cans;
     }
+
+    private int CansCanIBuy(float money, float price, float canRefund)
+    {
+
+        if (money >= price)
+        {
+            //cans += (int) (money / price); //buyable cans this loop
+
+            int loopCans = (int) (money / price); //buyable cans this loop
+
+            cans += loopCans;
+            
+            Debug.Log(cans + " is cans");
+            Debug.Log(loopCans + " is loopcans");
+
+            money = (money % price) + (loopCans * canRefund); //finds leftover money after refunds
+            //money = (money % price) + ((money / price) * canRefund); //finds leftover money after refunds
+            Debug.Log(money + " is money");
+            //cans += CansCanIBuy(money, price, canRefund);
+
+            if (money >= price)
+            {
+                CansCanIBuy(money, price, canRefund);
+            }
+            
+        }
+
+        Debug.Log(cans);
+        return cans;
+    }
+    
+    
+    
+    
     
     // =========================== DON'T EDIT BELOW THIS LINE =========================== //
 
@@ -233,7 +293,7 @@ public bool firstLastChecker(string toCheck)
     {
         
         //Debug.Log(ReverseString("TEST"));
-        Debug.Log(IsPalindrome("racecar"));
+        //Debug.Log(IsPalindrome("racecar"));
         recursionTest.text =  "Recursion Problems\n<align=left>\n";
         recursionTest.text += Success(ReverseString("TEST") == "TSET") + " string reverser worked correctly.\n";
         recursionTest.text += Success(!IsPalindrome("TEST") && IsPalindrome("ASDFDSA") && IsPalindrome("ASDFFDSA")) + " palindrome test worked correctly.\n";
