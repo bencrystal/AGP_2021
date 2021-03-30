@@ -89,14 +89,128 @@ def sameUpsideDown(input) :
 	'''
 	return True
 
+'''
+word prefix trie from class:
+to lowercase
+define library outside function
+create initial node with subnodes for each of the 26 letters
+from each concatenate a new branch and node if the combo read in from the wordlist is nonexistent
+
+
+'''
+
+def addWordToTrie(d, word, idx):
+    #reads in dictionary, curreny word, and index
+    #if the current letter's index is longer than the current word, the word is over and the node is a leaf
+    if idx >= len(word):
+        d['leaf']=True
+        return
+
+    #if the current index in a word is not in an available branch, the current node is not a leaf (still part of the tree) and
+    #the next index should be added back into this function recursively
+    if word[idx] not in d:
+        d[word[idx]] = {'leaf':False}
+    addWordToTrie(d[word[idx]], word, idx+1)
+
+
+#reads wordlist line by line into lowercase list
+wordList = open("wordlist.txt").read().lower().split()
+#print(wordlist)
+
+#creates 
+trie = {}
+for word in wordList:
+    addWordToTrie(trie, word, 0)
+
+#validWords = addWordToTrie()
+
+
+
+'''
+
+#EXAMPLE I LEARNED FROM
+def findWords(trie, word, currentWord):
+	#compares current word to words in trie
+    myWords = set()      
+    #for each letter in the word being checked (e.g. t r e e)
+    for letter in word:
+    	#if that letter exists as a branch off current node
+        if letter in trie:
+        	#the new word being compared recursively includes that letter
+            newWord = currentWord + letter
+            #if that letter is a leaf, it is a proper word and that should be added to the list of included words
+            if trie[letter]['leaf']:
+                myWords.add(newWord)
+                #concatenate list of real words with potential new word 1 letter longer
+            myWords = myWords.union(findWords(trie[letter], word, newWord))
+    return myWords
+'''
+
+
+'''
+we basically want to check if the initial letter is an initial node in the tree and if so exhaust until we find all leafs 
+that are numLetters deep into the tree
+'''
+'''
+
+def findWords(trie, currentWord, numLetters):
+	#compares current word to words in trie
+    myWords = set()      
+    
+    #if that letter exists as a branch off current node
+    if letter in trie:
+
+
+
+        #the new word being compared recursively includes that letter
+        newWord = currentWord + letter
+        #if that letter is a leaf and the word is of the expecte length, it is a proper word and that should be 
+        #added to the list of included words
+        if trie[letter]['leaf'] && len(newWord) == numLetters:
+            myWords.add(newWord)
+            #concatenate list of real words with potential new word 1 letter longer
+        
+        myWords = myWords.union(findWords(trie[letter], word, newWord))
+    return myWords
+'''
+
+def findWords(currentWord, numLetters, subTrie = trie):
+	#compares current word to words in trie
+    myWords = set()      
+    
+    #if that letter exists as a branch off current node
+    if letter in subTrie:
+
+    	#the new word being compared recursively includes that letter
+		newWord = currentWord + letter
+
+
+        	
+        	
+        #if that letter is a leaf and the word is of the expected length, it is a proper word and that should be 
+        #added to the list of included words
+    if (subTrie[letter]['leaf'] & len(newWord) == numLetters):
+        myWords.add(newWord)
+
+    	#for each branch that stems off the current letter in the tree
+	for nextBranch in subTrie[letter]:
+
+            #concatenate list of real words with potential new word 1 letter longer
+            myWords = myWords.union(findWords(subTrie[letter], word, newWord))
+    return myWords
+
+
 
 # Read the provided list of words, write to "output.txt" all words of given length that start with that letter.
 def allWordsOfLength(length, startingLetter) :
 
-	wordlist = open("wordlist.txt", "r")
-	print(wordlist)
+    successfulWords = findWords(startingLetter, length)
+    for word in successfulWords:
+	   open("output.txt").write(word)
+	   print("output.txt")
 
-	return 0
+
+	   return 0
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 # Don't edit below this line.
