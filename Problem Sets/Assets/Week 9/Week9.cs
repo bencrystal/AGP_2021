@@ -25,9 +25,9 @@ public class Week9 : MonoBehaviour
             this.children = children.ToList();
         }
     }
-    
+
     // write a function that returns true if a tree contains a number, false if it doesn't.
-    
+
     /*
      * check root of tree if equal or if leaf
      * if not then check down branches to see if equal or if leaf
@@ -37,9 +37,9 @@ public class Week9 : MonoBehaviour
         //compares to number
         if (root.value == number)
         {
-            Debug.Log(root.value);
+            //Debug.Log(root.value);
             return true;
-            
+
         }
         /*
         //checks if leaf
@@ -50,14 +50,17 @@ public class Week9 : MonoBehaviour
         */
         else
         {
-            int i = 0;
+
             foreach (var kids in root.children)
             {
-                return ContainsNumber(root.children[i], number);
-                i++;
+                if (ContainsNumber(kids, number))
+                {
+                    return true;
+                }
+
             }
         }
-        
+
         /*
          
         //if it were a binary tree with left less and right more than the root
@@ -71,20 +74,22 @@ public class Week9 : MonoBehaviour
             return ContainsNumber(root.children[1], number);
         }
         */
-        
-        
-        
+
+
+
         return false;
     }
 
     // write a function that returns true if the tree contains duplicates, false if not.
-    
+
     /*
      * either create a list of all nodes in tree and compare each time or
      * run the ContainsNumber function with the old node.value as the new number, ignoring the current node
      */
     public bool ContainsDuplicates(Node root)
     {
+
+        /*
         List<int> allNumbers = new List<int>();
         
         foreach (var kid in root.children)
@@ -101,9 +106,29 @@ public class Week9 : MonoBehaviour
             
             //I would recursively call this for the children but I'm not sure how to make it not include the same note twice
             //ContainsDuplicates(kid);
-        }
             
-        return true;
+            */
+        var values = new HashSet<int>();
+        return DuplicateRecursive(root, values);
+    }
+
+
+
+    public bool DuplicateRecursive(Node root, HashSet<int> values)
+    {
+        if (values.Contains(root.value)) return true;
+
+        values.Add(root.value);
+
+        foreach (var child in root.children)
+        {
+            if (DuplicateRecursive(child, values))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // write a function to add a new node to the tree as a child of a node w/ value 'toAddTo'
@@ -114,6 +139,19 @@ public class Week9 : MonoBehaviour
      */
     public bool AddAsChild(Node root, int toAddTo, int numberToAdd)
     {
+        if (root.value == toAddTo)
+        {
+            root.children.Add(new Node(numberToAdd));
+            return true;
+        }
+
+        foreach (var child in root.children)
+        {
+            if (AddAsChild(child, toAddTo, numberToAdd))
+            {
+                return true;
+            }
+        }
         return false;
     }
     
@@ -121,7 +159,29 @@ public class Week9 : MonoBehaviour
     // be 1, and so on.  Return -1 if it can't find the number in the tree.
     public int DepthOfNumber(Node root, int number)
     {
-        return 0;
+        //return 0;
+        //var depth = 0;
+        return RecursiveDepth(root, number, 0);
+    }
+
+    public int RecursiveDepth(Node root, int number, int depth)
+    {
+        if (root.value == number)
+        {
+            return depth;
+        }
+
+        foreach (var child in root.children)
+        {
+            var returnedDepth = RecursiveDepth(child, number, depth + 1);
+            if (returnedDepth >= 0)
+            {
+                return returnedDepth;
+            }
+
+            
+        }
+        return -1;
     }
     
     // =========================== DON'T EDIT BELOW THIS LINE =========================== //
