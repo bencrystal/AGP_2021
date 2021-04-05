@@ -37,15 +37,17 @@ public class Week9 : MonoBehaviour
         //compares to number
         if (root.value == number)
         {
+            Debug.Log(root.value);
             return true;
+            
         }
-        
+        /*
         //checks if leaf
         else if (root == null)
         {
             return false;
         }
-
+        */
         else
         {
             int i = 0;
@@ -76,13 +78,40 @@ public class Week9 : MonoBehaviour
     }
 
     // write a function that returns true if the tree contains duplicates, false if not.
+    
+    /*
+     * either create a list of all nodes in tree and compare each time or
+     * run the ContainsNumber function with the old node.value as the new number, ignoring the current node
+     */
     public bool ContainsDuplicates(Node root)
     {
-        return false;
+        List<int> allNumbers = new List<int>();
+        
+        foreach (var kid in root.children)
+        {
+            if (allNumbers.Contains(kid.value))
+            {
+                return false;
+            }
+
+            else
+            {
+                allNumbers.Add(kid.value);
+            }
+            
+            //I would recursively call this for the children but I'm not sure how to make it not include the same note twice
+            //ContainsDuplicates(kid);
+        }
+            
+        return true;
     }
 
     // write a function to add a new node to the tree as a child of a node w/ value 'toAddTo'
     // return false if you can't find the node to add to, true if you successfully add it.
+    
+    /*
+     * 
+     */
     public bool AddAsChild(Node root, int toAddTo, int numberToAdd)
     {
         return false;
