@@ -27,8 +27,51 @@ public class Week9 : MonoBehaviour
     }
     
     // write a function that returns true if a tree contains a number, false if it doesn't.
+    
+    /*
+     * check root of tree if equal or if leaf
+     * if not then check down branches to see if equal or if leaf
+     */
     public bool ContainsNumber(Node root, int number)
     {
+        //compares to number
+        if (root.value == number)
+        {
+            return true;
+        }
+        
+        //checks if leaf
+        else if (root == null)
+        {
+            return false;
+        }
+
+        else
+        {
+            int i = 0;
+            foreach (var kids in root.children)
+            {
+                return ContainsNumber(root.children[i], number);
+                i++;
+            }
+        }
+        
+        /*
+         
+        //if it were a binary tree with left less and right more than the root
+        if (root.value > number)
+        {
+            return ContainsNumber(root.children[0], number);
+        }
+
+        else
+        {
+            return ContainsNumber(root.children[1], number);
+        }
+        */
+        
+        
+        
         return false;
     }
 
